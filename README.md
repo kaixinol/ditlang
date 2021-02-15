@@ -1,5 +1,5 @@
 ### Language [README.md](README.md) | [README_zh-cn.md](README_zh-cn.md)
-### Update logs [更新记录.txt](更新记录.txt)
+### Update logs(Chinese) [更新记录.txt](更新记录.txt)
 ## Brief introduction
 This programming language is built by FreeBASIC language.
 
