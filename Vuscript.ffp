@@ -45,27 +45,6 @@ TopTab=#FF_AppStart#|False|0|2|1275
 TopTab=#FF_PumpHook#|False|0|0|84
 #END_MAIN_PROPERTIES#
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [FF_APPSTART_START]
 '这里是打开软件后最初被执行代码的地方，此时软件内部还未初始化。（注：一般情况EXE包含DLL的，DLL先于EXE执行DLL自己的起始代码）
 ' 不管是EXE还是DLL，都从这里开始执行，然后到【程序入口函数】执行，整个软件结束或DLL被卸载就执行【程序出口】过程。(这里的EXE、DLL表示自己程序)
@@ -78,7 +57,6 @@ TopTab=#FF_PumpHook#|False|0|0|84
 #include Once "vbcompat.bi"     '一些兼容VB的语句和常数，不包含就会无法使用它们了。
 #include Once "fbthread.bi"     'VisualFreeBasic线程语句支持库，要用线程语句，就必须包含。
 #Include Once "crt\stdio.bi" 
-'以上 包含文件 会影响最终编译生成文件的大小，而不会影响运行效率，对于文件大小比较敏感的，可以根据需要调整。
 Type Variable
 VName As String
 VString As string
@@ -87,718 +65,9 @@ VInt As Integer
 VBoolean As BOOLEAN
 VType As short
 End type
-
-
-
-
-
-
-
-
-
 [FF_APPSTART_END]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [FF_WINMAIN_START]
-'******************************文档*********************************************
+'***************************************************************************
 'main:
 'VAR FF 
 'VAR G
@@ -807,7 +76,7 @@ End type
 'FREE FF
 'RET  G
 'END main
-'******************************文档结束*********************************************
+'***************************************************************************
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
 #define __debug "on"
@@ -817,11 +86,11 @@ Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
 Dim Shared Now_line(2) As INTEGER
 #if __debug = "on"
-#print "Vuscript核心版本 <build:520>"
+#print "Vuscript Core version <build:520>"
 #endif
 #define __color_test__ "off"
 #define DPrint(A) PC(4,"[DEBUG]"+(A))
-Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
+Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
    #if DBG
    DPrint(vbtab + "FF_WINMAIN()" + VBTAB + "OK!")
    #endif
@@ -830,16 +99,17 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
    Now_Line_ = 1
    dim i As short = 0 ,q as short
    #if __color_test__ = "on"
-   #print "色彩测试 开启……"
+   #print "Color test, on..."
    For i = 0 To 15
       PC i ,"test " + Str(i)
    Next
    
    i = 0
    #endif
+   ''' Output version information
    PC 10 ,"Vuscript 2.0  On win32[date:" + __DATE__ + " " + __TIME__ + "]" + vbcrlf + "If you wanna get more information ,please type ""--help"" for help."
    
-   '输出版本信息
+
    While len(Command(i)) <> 0
       i += 1
    wend
@@ -854,6 +124,7 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
       exit_( -2)
    End If
    i = 1
+   ''' Processing each command-line argument
    While len(Command(i)) <> 0
       if Command(i) = "-load" Then
          ScriptPath = Command(i + 1)
@@ -882,6 +153,8 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
          Dim ret() as string
          Split(Command(i) ,"=" ,ret())
          varspace = cint(ret(2))
+         ''' [Note]: the ret (0) is the string used to hold the array size.
+         ''' [Note]: This is the difference from Visual Basic.
       End if
       
       i = i + 1
@@ -908,10 +181,10 @@ HelpMessage :
    Function = false
 End function
    
-Sub FF_WINEND(ByVal hInstance As HINSTANCE) '***用检查程序是否正常退出
+Sub FF_WINEND(ByVal hInstance As HINSTANCE) '***Check if the program exits properly
 End Sub
 
-Sub PC(cl2 As const integer, D AS const STRING = vbcrlf)   '***输出带颜色的字
+Sub PC(cl2 As const integer, D AS const STRING = vbcrlf)   '***Outputs text of the specified color
   if cl2 > 15 Then
   SetConsoleTextAttribute GetStdHandle(STD_OUTPUT_HANDLE), 7
    Exit sub
@@ -921,44 +194,27 @@ Sub PC(cl2 As const integer, D AS const STRING = vbcrlf)   '***输出带颜色�
  
   SetConsoleTextAttribute GetStdHandle(STD_OUTPUT_HANDLE), 7
 End Sub
-Sub LoadScript(size As integer) '***加载脚本
+Sub LoadScript(size As integer) '***Loading scripts
    #if DBG
    DPrint(vbtab + "LoadScript()->file="+ScriptPath)
    #endif
-Dim 变量空间() as Variable
-ReDim 变量空间(1 To size)
+Dim VariableSpace() as Variable
+ReDim VariableSpace(1 To size)
 If  Filelen(ScriptPath)=0 Then
 printf "can't find file:"+ScriptPath+",and this program will stop."
 DeleteFile ScriptPath
 Exit_(2)
 End if
 End Sub
-Sub GetLine_And_LoadLine() '***读取所有行与行数
+Sub GetLine_And_LoadLine() '***Reads the string for each line and records the total number of lines
    Dim f As const Integer = FreeFile
    Open ScriptPath For Binary As #f
    TheLine = Split(Input(LOF(1), #1), vbCrLf, Line_Data())
    Close #f
 End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [FF_WINMAIN_END]
 [FF_PUMPHOOK_START]
 Function FF_PUMPHOOK( uMsg As Msg ) As Long
    Function = False  
 End Function
-
 [FF_PUMPHOOK_END]
-
-
