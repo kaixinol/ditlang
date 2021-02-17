@@ -20,6 +20,8 @@ FREE FF
 RET  G
 END main
 ```
+## More message
+Browse the [wiki](https://github.com/3XDot/FreeBASICDit/wiki) of this repository (not yet written).
 ## Todos
 
 ## License

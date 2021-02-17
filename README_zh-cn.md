@@ -20,6 +20,8 @@ FREE FF
 RET  G
 END main
 ```
+## 更多信息
+浏览此仓库的[维基](https://github.com/3XDot/FreeBASICDit/wiki)(目前仍未编写好)
 ## 待办事项
 
 ## 执照
