@@ -1,4 +1,4 @@
-﻿#VisualFreeBasic_Project#  Version=5.5.1
+﻿#VisualFreeBasic_Project#  Version=5.5.2
 NumObjects=3
 ProjectName=Dust
 CompilationMode=0
@@ -17,20 +17,20 @@ UseWinXPthemes=0
 StrUnicode=0
 UseAdminPriv=0
 DeleteGeneratedCode=-1
-AddCompOps= -gen gcc -O 0 -exx
+AddCompOps= 
 LastRunFilename=Dust32.exe
 ImageManager=30001.ico|ICON|0
 ImageManager=
 Major=1
 Minor=5
 Revision=5
-Build=662
+Build=712
 FileMajor=1
 FileMinor=5
 FileRevision=5
-FileBuild=681
+FileBuild=761
 AutoIncrement=3
-DefaultCompiler=32
+DefaultCompiler=64
 Comments=
 CompanyName=
 FileDescription=
@@ -40,8 +40,8 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|True|0|86|3065
-TopTab=#FF_AppStart#|False|0|6|1660
+TopTab=#FF_WinMain#|True|0|120|3974
+TopTab=#FF_AppStart#|False|0|8|1598
 TopTab=#FF_PumpHook#|False|0|0|84
 #END_MAIN_PROPERTIES#
 
@@ -737,6 +737,12 @@ End type
 
 
 
+
+
+
+
+
+
 [FF_WINMAIN_START]
 '******************************文档*********************************************
 'main:
@@ -788,7 +794,7 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
    wend
    i -= 1
    q=i
-   If i < 2 And Command(1) <> "--help" And Command(1) <> "--v" and command(1)<>"--copyright"Then
+   If i < 2 And Command(1) <> "--help" And Command(1) <> "--v" and command(1)<>"--copyright" Then
       If q=0 Then Goto HelpMessage
       PC 12 ,"Too few command line arguments or Invalid command line arguments "
       exit_( -1)
@@ -808,7 +814,7 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
          WindowStay = true
       ElseIf Command(i) = "--help" then
          HelpMe = true
-      ElseIf Command(i -1) <> "-load" And Command(i) <> "--v" And Command(i) <> "--copyright"then
+      ElseIf Command(i -1) <> "-load" And Command(i) <> "--v" And Command(i) <> "--copyright" And LEFT(Command(i) ,9) <> "-varspace" then
 
          PC 12 ,"Invalid command line arguments """ + Command(i) + """"
          exit_( -4)
@@ -840,12 +846,12 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***程序开始
       PC 3 , "Use ""-varspace=<size>"" To set the varible zone size."
       exit_(1)
    End If
-   if WindowStay = True Then
-      getchar
-   End If
+
    
    LoadScript(varspace)
-   
+      if WindowStay = True Then
+      getchar
+   End If
    Function = false
    
 End Function
@@ -864,7 +870,9 @@ End Sub
 Sub LoadScript(size As integer) '***加载脚本
 Dim 变量空间() as Variable
 ReDim 变量空间(1 To size)
+If  AfxFileExists(StrToWStr(ScriptPath))<> True Then
 
+End if
 End Sub
 Sub GetLine_And_LoadLine() '***读取所有行与行数
    Dim f As const Integer = FreeFile
@@ -876,8 +884,6 @@ Sub GetLine_And_LoadLine() '***读取所有行与行数
    #endif
    Close #f
 End Sub
-
-
 
 
 
