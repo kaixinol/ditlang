@@ -1,0 +1,17 @@
+:import System.IO
+:import System.IO.File
+:import System.HttpRequst
+begin Int main()
+	Int test:=0
+	ret test
+	:end  #½áÊø³ÌÐò
+end main
+begin add(Int a,Int b)
+	if(a==0&&b==0 )
+	exit(0)
+	end
+Str s
+s:='Hello World'
+print(s+Tostr(a+b))
+end add
+##key word:import,:end,if,end,ret,begin,Str,Int,Bool,Dou
