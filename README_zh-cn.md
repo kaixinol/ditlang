@@ -11,14 +11,17 @@
 Window x64环境下使用[VFB ide](http://www.yfvb.com/soft-48.htm)直接编译即可
 ## 示例代码
 ```
+def main::Integer | Integer,argc ! String(),argv
 main:
-VAR FF 
-VAR G
-LET FF=1
-LET G=<CALL <print FF>>
-FREE FF
-RET  G
-END main
+var a
+var b
+mov a,1
+add b,"ZZZZZ"
+add b,16
+call <print b>
+del b
+sub argc,1
+end main
 ```
 ## 更多信息
 浏览此仓库的[维基](https://github.com/3XDot/FreeBASICDit/wiki)(目前仍未编写好)
