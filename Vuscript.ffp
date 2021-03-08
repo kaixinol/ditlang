@@ -1,4 +1,4 @@
-#VisualFreeBasic_Project#  Version=5.5.2
+﻿#VisualFreeBasic_Project#  Version=5.5.2
 NumObjects=3
 ProjectName=Dust
 CompilationMode=0
@@ -28,7 +28,7 @@ Build=778
 FileMajor=1
 FileMinor=5
 FileRevision=5
-FileBuild=884
+FileBuild=886
 AutoIncrement=3
 DefaultCompiler=64
 Comments=
@@ -40,10 +40,12 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|False|0|0|1236
-TopTab=#FF_AppStart#|True|0|30|1837
+TopTab=#FF_WinMain#|False|0|0|1216
+TopTab=#FF_AppStart#|True|0|18|4356
 TopTab=#FF_PumpHook#|False|0|0|82
 #END_MAIN_PROPERTIES#
+
+
 
 
 
@@ -153,7 +155,7 @@ Declare Function GetData ()As string
 Declare Sub ClearData( )
 Declare Constructor ()
 VName As String
-VString As String 
+VString As String ptr
 VDou As Double
 VInt As Integer
 VType As short
@@ -226,30 +228,30 @@ sub Variable.ClearData ( )
 End sub
 Sub Variable.PrintData()
 
-   If This.vtype = 1 Then
+   If This.vtype = vStr Then
       printf This.vname + "::String->""" + *(This.vstring) + """" + vbcrlf 'String
       Exit sub
    End if
-   If This.vtype = 2 Then
+   If This.vtype = vDoub Then
       printf This.vname + "::Double->" + str(This.vdou) + vbcrlf 'Double
       Exit sub
    End if
-   If This.vtype = 3 Then
+   If This.vtype = vInte Then
       printf This.vname + "::Integer->" + str(This.vint) + vbcrlf 'Integer
       Exit sub
    End if
    printf This.vname + "::Empty" + vbcrlf 'Empty
 End Sub
 function Variable.GetData()As string
-   If This.vtype = 1 Then
+   If This.vtype = vStr Then
       If This.vstring=NULL Then RETURN "" 
       return *(This.vstring) 'String
    End if
-   If This.vtype = 2 Then
+   If This.vtype = vDoub Then
       return str(This.vdou)'Double
 
    End if
-   If This.vtype = 3 Then
+   If This.vtype = vInte Then
       return str(This.vint)  'Integer
    End if
     return "[Empty]" 'Empty
@@ -263,6 +265,8 @@ End function
 
 
 [FF_APPSTART_END]
+
+
 
 
 
@@ -709,6 +713,7 @@ next
  DPrint(vbtab + "GetVar()->"+sname+vbtab+"Failed!")
 #endif
 End function
+
 
 [FF_WINMAIN_END]
 [FF_PUMPHOOK_START]
