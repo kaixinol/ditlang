@@ -1,4 +1,4 @@
-﻿#VisualFreeBasic_Project#  Version=5.5.2
+﻿#VisualFreeBasic_Project#  Version=5.5.3
 NumObjects=3
 ProjectName=Dust
 CompilationMode=0
@@ -28,7 +28,7 @@ Build=778
 FileMajor=1
 FileMinor=5
 FileRevision=5
-FileBuild=886
+FileBuild=897
 AutoIncrement=3
 DefaultCompiler=64
 Comments=
@@ -40,10 +40,40 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|False|0|0|1216
-TopTab=#FF_AppStart#|True|0|18|4356
-TopTab=#FF_PumpHook#|False|0|0|82
+TopTab=#FF_WinMain#|True|0|218|6797
+TopTab=#FF_AppStart#|False|0|19|1599
+TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,6 +184,7 @@ Declare Sub PrintData ()
 Declare Function GetData ()As string
 Declare Sub ClearData( )
 Declare Constructor ()
+Declare Destructor ( )
 VName As String
 VString As String ptr
 VDou As Double
@@ -164,6 +195,7 @@ Type VarData
 VString As String ptr
 VDou As double
 VInt As Integer
+Declare Function GetType ()As short
 End type
 
 Type Argv
@@ -219,6 +251,9 @@ End Operator
 Constructor Variable ()
    This.vname="[Unused]"
 End Constructor
+Destructor Variable ( )
+   Delete This.vstring 
+End Destructor
 sub Variable.ClearData ( )
    THIS.VNAME="[Unused]"
    Delete This.vstring
@@ -226,6 +261,17 @@ sub Variable.ClearData ( )
    This.vint=0
    This.vdou=0
 End sub
+Function VarData.GetType ( )As SHORT
+If this.VString<>NULL Then
+Return vStr
+ElseIf this.Vint<>0 Then
+Return vInte
+ElseIf this.Vdou<>0.0 Then
+Return vDoub
+Else
+Return vEmp
+End if
+End Function
 Sub Variable.PrintData()
 
    If This.vtype = vStr Then
@@ -264,7 +310,100 @@ End function
 
 
 
+
+
+
+
 [FF_APPSTART_END]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -519,7 +658,8 @@ Dim Shared Now_line(2) As INTEGER
 
 
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
- #if DBG
+ 
+#if DBG
    DPrint(vbtab + "FF_WINMAIN()" + VBTAB + "OK!")
  #endif
    #if DBG
@@ -530,16 +670,17 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of t
    b(-1).VInt=12
    DPrint(vbtab + "FF_WINMAIN()->Test1" + VBTAB + "Begin")
    CreateVar(a(),"varname1")
+   
 
-
-   LetVar(a(1),Type<vardata>(New string("CNOIM"),1.1,15),1)
    a(1).PrintData
    a(1).ClearData
    b(-1).PrintData
    b(-1).ClearData
+ 
    b(-1).PrintData
    DPrint(a(1).GetData)
    Type<Variable>.printdata
+
    CreateVar(a(),"varname2")
    CreateVar(b(),"varname3")
    
@@ -558,6 +699,7 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of t
    i = 0
    #endif
    ''' Output version information
+
    PC 10 ,"Vuscript 2.0  On win32[date:" + __DATE__ + " " + __TIME__ + "]" + vbcrlf + "If you wanna get more information ,please type ""--help"" for help."
    
 
@@ -658,6 +800,7 @@ printf "can't find file:"+ScriptPath+",and this program will stop."
 DeleteFile ScriptPath
 Exit_(2)
 End if
+Dim RTL as short
 End Sub
 Sub GetLine_And_LoadLine() '***Reads the string for each line and records the total number of lines
    #if DBG
@@ -693,11 +836,11 @@ Exit sub
 End if
 next
 End sub
-SUB LetVar(obj As Variable,vardata_ As VarData,vartype As short)'***Set variable value 
+SUB LetVar(obj As Variable,vardata_ As VarData)'***Set variable value 
 obj.VDou=vardata_.VDou
 obj.VInt=vardata_.VInt
 obj.VString=vardata_.VString
-obj.VType=vartype
+obj.VType=vardata_.GetType
 End SUB
 function GetVar(zone() As Variable,sname As string)As Variable '***get variable value 
 Dim i as integer
@@ -713,6 +856,21 @@ next
  DPrint(vbtab + "GetVar()->"+sname+vbtab+"Failed!")
 #endif
 End function
+function Parse(obj As string)As VarData
+Type<VarData>(NULL,0.0,0).GETTYPE
+If InStr(obj,"'")<>0 and InStrrev(obj,"'")<>0 then
+Return Type<VarData>(0,0,0.0)
+ElseIf InStr(obj,".")<>0  then
+Return Type<vardata>(NULL,Val(obj),0)
+ElseIf obj=str(cint(obj)) then
+Return Type<vardata>(NULL,0.0,0)
+Else
+Return Type<vardata>(NULL,0.0,0)
+End if
+End function
+
+
+
 
 
 [FF_WINMAIN_END]
