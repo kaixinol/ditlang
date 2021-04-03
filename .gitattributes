@@ -1,2 +1,3 @@
 *.ffp linguist-language=VBA
-*.md linguist-language=VBA
+*.Inc linguist-language=VBA
+*.inc linguist-language=VBA
