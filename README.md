@@ -28,4 +28,4 @@ Browse the [wiki](https://github.com/3XDot/FreeBASICDit/wiki) of this repository
 ## Todos
 
 ## License
-MIT
+MIT License &  [The Star And Thank Author License](https://github.com/zTrix/sata-license) 
