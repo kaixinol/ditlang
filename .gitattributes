@@ -1,2 +1,3 @@
-*.Inc linguist-language=VBA
-*.inc linguist-language=VBA
+*.Inc linguist-language=FreeBasic
+*.inc linguist-language=FreeBasic
+*.ffp linguist-language=FreeBasic
