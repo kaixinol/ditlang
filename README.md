@@ -23,5 +23,8 @@ END main
 ## Todos
 - Add function check
 - Simple Dit code execution
+## Dependent project
+- [GetToken](https://github/3XDot/GetToken)
+- [WinAPICall](https://github/3XDot/WinAPICall)
 ## License
 [MIT License](https://github.com/3XDot/FreeBASICDit/blob/master/LICENSE) &  [The Star And Thank Author License](https://github.com/zTrix/sata-license) 
