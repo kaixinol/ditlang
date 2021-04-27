@@ -11,21 +11,20 @@
 Window x64环境下使用[VFB ide](http://www.yfvb.com/soft-48.htm)直接编译即可
 ## 示例代码
 ```
-def main::Integer | Integer,argc ! String(),argv
 main:
-var a
-var b
-mov a,1
-add b,"ZZZZZ"
-add b,16
-call <print b>
-del b
-sub argc,1
-end main
+VAR FF 
+VAR G
+LET FF=1
+LET G=<CALL <print FF>>
+FREE FF
+RET  G
+END main
 ```
-## 更多信息
-浏览此仓库的[维基](https://github.com/3XDot/FreeBASICDit/wiki)(目前仍未编写好)
 ## 待办事项
-
+- 添加函数检查
+- 简单的Dit代码执行
+## 依赖项目
+- GetToken(https://github/3XDot/GetToken)
+- WinAPICall(https://github/3XDot/WinAPICall)
 ## 执照
-MIT
+[MIT License](https://github.com/3XDot/FreeBASICDit/blob/master/LICENSE) &  [The Star And Thank Author License](https://github.com/zTrix/sata-license) 
