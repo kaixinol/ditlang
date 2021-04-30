@@ -3,7 +3,7 @@ NumObjects=3
 ProjectName=Dust
 CompilationMode=0
 CompilationDebug=0
-FunNameNumber=0
+FunNameNumber=-1
 CharSet=1
 CodePage=936
 ProjectType=GUI
@@ -11,13 +11,13 @@ UseGDIPlus=0
 ShowConsole=-1
 MultiLanguage=0
 OmitInformation=0
-UseStartupIcon=-1
+UseStartupIcon=0
 StartupIcon=30001.ico|ICON_30001
 UseWinXPthemes=0
 StrUnicode=0
 UseAdminPriv=0
-DeleteGeneratedCode=-1
-AddCompOps= -gen gcc -exx -O 3
+DeleteGeneratedCode=0
+AddCompOps= -gen gcc -O 3 
 LastRunFilename=Dust32.exe
 ImageManager=30001.ico|ICON|0
 ImageManager=
@@ -28,8 +28,8 @@ Build=897
 FileMajor=1
 FileMinor=5
 FileRevision=5
-FileBuild=928
-AutoIncrement=1
+FileBuild=931
+AutoIncrement=0
 DefaultCompiler=32
 Comments=
 CompanyName=
@@ -40,10 +40,16 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|False|0|0|5256
-TopTab=#FF_AppStart#|True|0|118|5608
+TopTab=#FF_WinMain#|True|0|142|4934
+TopTab=#FF_AppStart#|False|0|156|1196
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
+
+
+
+
+
 
 
 
@@ -228,6 +234,7 @@ TopTab=#FF_PumpHook#|False|0|0|0
 #include Once "windows.bi"      'WIN系统基础库，主要是WIN系统常用的API，不使用API可以不包含它。
 #include Once "win/shlobj.bi"   'WIN系统对象库，shell32.dll的头文件，主要涉及shell及通用对话框等。
 #include Once "afx/CWindow.inc" 'WinFBX 库，是WIN系统增强基础库，使用窗口和控件必须要用到它。
+#include Once "Afx/CStack.inc"
 #include Once "vbcompat.bi"     '一些兼容VB的语句和常数，不包含就会无法使用它们了。
 #include Once "fbthread.bi"     'VisualFreeBasic线程语句支持库，要用线程语句，就必须包含。
 #Include Once "crt\stdio.bi"
@@ -256,7 +263,6 @@ Type Variable
 Declare Sub PrintData ()
 #endif
 Declare Sub  SetData (vardata_ As VarData) 
-Declare Sub  SetData () 
 Declare Function GetData ()As string
 Declare Sub ClearData( )
 VName As String
@@ -344,9 +350,15 @@ End if
 End Function
 #If DBG
 Sub Variable.PrintData()
-
+      If Len(This.vname) = 0 Then
+         This.vname="[Unused]"
+      End if
    If This.vtype = vStr Then
-      printf This.vname + "::String->""" + *(This.vstring) + """" + vbcrlf 'String
+      If Len(This.vname) = 0 Then
+         printf "[Unused]::String->""" + * (This.vstring) + """" + vbcrlf 'String
+      else
+         printf This.vname+ "::String->""" + * (This.vstring) + """" + vbcrlf 'String
+      End if
       Exit sub
    End if
    If This.vtype = vDoub Then
@@ -358,6 +370,9 @@ Sub Variable.PrintData()
       Exit sub
    End if
    printf This.vname + "::Empty" + vbcrlf 'Empty
+If This.vname = "[Unused]" Then
+This.vname=""
+End if
 End Sub
 #endif
 function Variable.GetData()As string
@@ -380,9 +395,7 @@ this.VInt=vardata_.VInt
 this.VString=vardata_.VString
 this.VType=vardata_.GetType
 End SUB
-SUB Variable.SetData(sName As String="[Unused]")'***Set variable value 
-This.vname=sName
-End SUB
+
 
 
 
@@ -400,6 +413,7 @@ End SUB
 
 
 [FF_APPSTART_END]
+
 
 
 
@@ -950,6 +964,7 @@ VariableSpace(-1).VInt=size
 Dim TMPInt as short
 For TMPInt=0 to TheLine
 '''TODO :Add Function by scanning text.
+
 next
 If  FileExists(ScriptPath)=false Then
 printf "can't find file:"+ScriptPath+",and this program will stop."
@@ -1021,6 +1036,7 @@ Function Evaluate(obj As string)As any ptr
 'Empty
 Return NULL
 End function
+
 
 
 
