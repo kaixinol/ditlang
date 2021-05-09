@@ -1,3 +1,4 @@
+# 已暂停开发 ;(
 ### Language [README.md](README.md) | [README_zh-cn.md](README_zh-cn.md)
 ### 更新记录 [更新记录.txt](更新记录.txt)
 ## 简要说明
