@@ -25,7 +25,7 @@ END main
 - 添加函数检查
 - 简单的Dit代码执行
 ## 依赖项目
-- [GetToken](https://github/3XDot/GetToken)
-- [WinAPICall](https://github/3XDot/WinAPICall)
+- [GetToken](https://github.com/3XDot/GetToken)
+- [WinAPICall](https://github.com/3XDot/WinAPICall)
 ## 执照
 [MIT License](https://github.com/3XDot/FreeBASICDit/blob/master/LICENSE) &  [The Star And Thank Author License](https://github.com/zTrix/sata-license) 
