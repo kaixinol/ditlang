@@ -1,27 +1,32 @@
-MOV transfer instruction
+MOV transfer instruction [a=b assignment only]
 PUSH stack instruction
 POP pop instruction
-XCHG exchange order
-LEA effective address to register instruction
-ADD addition instruction
-INC plus 1 instruction
-DEC minus 1 instruction
-NEG complement instruction
-CMP compare instruction
-MUL unsigned number multiplication instruction
-DIV unsigned number division instruction
-AND logic and instruction
-OR logic or instruction
-XOR logic exclusive OR instruction
-NOT logical NOT instruction
-TEST test instruction
+XCHG exchange command [a=b]
+ADD addition instruction [a=a+b only handle numbers]
+INC plus 1 instruction [a+=1 only process numbers]
+DEC minus 1 instruction [a-=1 only process numbers]
+CMP comparison instruction [a==b]
+MUL multiplication instruction [c=a*b only handle numbers]
+DIV division instruction [c=a/b only handle numbers]
+AND Logic and instruction [ret a&&b]
+OR logical OR instruction [ret a||b]
+ANDB bit logic AND instruction [ret a&b only handles numbers]
+ORB bit logic OR instruction [ret a|b only handles numbers]
+XOR logic exclusive OR instruction [ret a^b]
+NOT Logical NOT instruction [ret !a]
 CALL subroutine call instruction
-RET subroutine return instruction
+RET subroutine return instruction [ret a]
 NOP No operation instruction
 HLT stop instruction
+FREE release variable instruction
+VAR declaration variant variable instruction
 $ Current value of address counter
-JMP unconditional branch instruction
-JZ results in zero transfer
-JNZ result is not zero transfer
-JS result is negative transfer
-JNS result is positive transfer
+JMP unconditional branch instruction [jmp a]
+JZ result is zero transfer [if a==0 then jmp b]
+JNZ result is not zero transfer [if a then jmp b]
+JS result is negative transfer [if a<0 then jmp b]
+JNS result is positive transfer [if a>0 then jmp b]
+
+Obsolete instructions:
+TEST test instruction
+LEA load effective address
