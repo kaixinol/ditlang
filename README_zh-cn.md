@@ -52,7 +52,7 @@ a.save();
 free(a);
 CVariant a;
 a.setintval(16);
-if(a){goto line;}
+if(a.getintval()){goto line;}
 c.setintval(a.getintval()^b.getintval());
 return c;
 (void)0;
