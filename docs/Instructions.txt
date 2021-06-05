@@ -1,0 +1,27 @@
+MOV transfer instruction
+PUSH stack instruction
+POP pop instruction
+XCHG exchange order
+LEA effective address to register instruction
+ADD addition instruction
+INC plus 1 instruction
+DEC minus 1 instruction
+NEG complement instruction
+CMP compare instruction
+MUL unsigned number multiplication instruction
+DIV unsigned number division instruction
+AND logic and instruction
+OR logic or instruction
+XOR logic exclusive OR instruction
+NOT logical NOT instruction
+TEST test instruction
+CALL subroutine call instruction
+RET subroutine return instruction
+NOP No operation instruction
+HLT stop instruction
+$ Current value of address counter
+JMP unconditional branch instruction
+JZ results in zero transfer
+JNZ result is not zero transfer
+JS result is negative transfer
+JNS result is positive transfer
