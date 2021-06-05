@@ -54,7 +54,7 @@ CVariant a;
 a.setintval(16);
 if(a.getintval()){goto line;}
 c.setintval(a.getintval()^b.getintval());
-return c;
+return c.getintval();
 (void)0;
 (void)0;
 line: __asm("lea");
