@@ -39,10 +39,22 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|False|0|0|503
-TopTab=#FF_AppStart#|True|0|154|6233
+TopTab=#FF_WinMain#|False|0|260|8548
+TopTab=#FF_AppStart#|True|0|16|1257
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -301,7 +313,7 @@ TopTab=#FF_PumpHook#|False|0|0|0
 #define UNICODE                 '表示WIN的API默认使用 W系列，宽字符处理，如果删除（使用ASCII字符）会造成控件和API使用的代码编写方式，影响深远。
 #lang "FB"                      '表示为标准FB格式    
 #include Once "vbcompat.bi"     
-#Include Once "crt\stdio.bi"
+#Include Once "crt/stdio.bi"
 #define CR +vbcrlf
 #define vStr 1
 #define vDoub 2
@@ -316,7 +328,10 @@ TopTab=#FF_PumpHook#|False|0|0|0
 #define DPrint(A) PC(4,"[DEBUG]"+(A))
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
-
+Type Str2D
+str1 As String =""
+str2 As String =""
+End Type
 Type VarData
 VString As String ptr
 VDou As double
@@ -340,8 +355,8 @@ VDou As Double
 VInt As Integer
 End type
 Type Token
-begin As Long
-_end As long
+begin As Long=0
+_end As long=0
 End type
 Type Stack
 Declare Sub Push (argv As VarData) 
@@ -371,6 +386,22 @@ Operator = ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
   If a.vdou =b.vdou Then aq+=1
   If a.gettype =b.gettype Then aq+=1
 Return aq=5
+End Operator
+Declare Operator <> ( ByRef a As token, ByRef b As token ) As BOOLEAN
+Operator <> ( ByRef a As token, ByRef b As token ) As BOOLEAN
+If a.begin<>b.begin Or a._end<>b._end Then
+ Return true
+Else 
+Return False
+End if
+End Operator
+Declare Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
+Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
+If a.begin=b.begin and a._end=b._end Then
+ Return true
+Else 
+Return False
+End if
 End Operator
 Declare Operator <> ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
 Operator <> ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
@@ -513,21 +544,24 @@ Sub Stack.Push(argv As VarData)
 End sub
 Sub Stack.Pop()
    Dim tmp as Short
-Print "D "
+   
    For tmp = 0 To used(0)
-Print "D P"
+      
       If This.place(tmp) <> NULL then
-Print "D P T"
-         Delete (*This.place(tmp)).vstring
-Print "D P T 1"
+         
+         Delete( *This.place(tmp)).vstring
+         
          Delete This.place(tmp)
-Print "D P T 2"
+         
          This.place(tmp) = null
       End If
-Print "D P T 3"
+      
    next
-Print "D P T 4"
+   
 End sub
+
+
+
 
 
 
@@ -1000,11 +1034,89 @@ End sub
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [FF_WINMAIN_START]
 Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
 Dim Shared Now_line(2) As INTEGER
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
+print GetFirst("'","mov ',',1").str1
 Dim t() AS TOKEN
 ReDim t(0 To 10)
 Dim ib as Stack=10
@@ -1126,6 +1238,7 @@ HelpMessage :
    DPrint(vbtab + "FF_WINMAIN()->varspace=" + Str(varspace))
    #endif
    If  FileLEN(ScriptPath) =0  Then
+
       printf "can't find file:" + ScriptPath + ",and this program will stop.(EMPTY?)"
       Exit_(2)
    End if
@@ -1244,15 +1357,39 @@ Function Evaluate(obj As string)As any ptr
 'Empty
 Return NULL
 End function
-
-
-
-
-
-
-
-
-
+Function GetFirst(byval sp as string ,str_ as string)as str2d
+   Dim i as integer
+   Dim cmptk as Token=Type<token>
+   while i = len(str_)
+      i += 1
+   wend
+   'if mod (i ,2) <> 0 then
+   '   'Return Type < token > ( -1 , -1)
+   'End if
+   dim as BOOLEAN a ,b
+   Dim ret(1 To 2) as token
+   while i = len(str_)
+      if str_[i] <> sp[0] then '
+         i += 1
+      else
+         if a <> True And ret(a) <> Type < token > then
+            a            = true
+            ret(a).begin = i
+         Else
+            ret(a). _end = i
+         End if
+         if a = True And ret(a) <> Type < token > then
+            b            = true
+            ret(2).begin = i
+         Else
+            ret(2). _end = i
+         End if
+      End if
+   wend 
+Dim tp1 as String=Mid(str_ ,ret(1).begin ,ret(1). _end)
+Dim tp2 as String=Mid(str_ ,ret(2).begin ,ret(2). _end)
+   Return Type < str2d > ( tp1,tp2)
+End function
 
 [FF_WINMAIN_END]
 [FF_PUMPHOOK_START]
