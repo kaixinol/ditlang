@@ -39,10 +39,11 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|False|0|260|8548
-TopTab=#FF_AppStart#|True|0|16|1257
+TopTab=#FF_WinMain#|True|0|259|7637
+TopTab=#FF_AppStart#|False|0|16|1257
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
 
 
 
@@ -329,8 +330,8 @@ TopTab=#FF_PumpHook#|False|0|0|0
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
 Type Str2D
-str1 As String =""
-str2 As String =""
+str1 As String Ptr
+str2 As String ptr
 End Type
 Type VarData
 VString As String ptr
@@ -572,7 +573,17 @@ End sub
 
 
 
+
 [FF_APPSTART_END]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1359,13 +1370,13 @@ Return NULL
 End function
 Function GetFirst(byval sp as string ,str_ as string)as str2d
    Dim i as integer
-   Dim cmptk as Token=Type<token>
+
    while i = len(str_)
       i += 1
    wend
-   'if mod (i ,2) <> 0 then
-   '   'Return Type < token > ( -1 , -1)
-   'End if
+   if i mod  2 <> 0 then
+      Return TYPE<Str2D>(NULL,NULL)
+   End if
    dim as BOOLEAN a ,b
    Dim ret(1 To 2) as token
    while i = len(str_)
@@ -1386,10 +1397,9 @@ Function GetFirst(byval sp as string ,str_ as string)as str2d
          End if
       End if
    wend 
-Dim tp1 as String=Mid(str_ ,ret(1).begin ,ret(1). _end)
-Dim tp2 as String=Mid(str_ ,ret(2).begin ,ret(2). _end)
-   Return Type < str2d > ( tp1,tp2)
+   Return Type < str2d > ( New string(Mid(str_ ,ret(1).begin ,ret(1). _end)),New string(Mid(str_ ,ret(2).begin ,ret(2). _end)))
 End function
+
 
 [FF_WINMAIN_END]
 [FF_PUMPHOOK_START]
