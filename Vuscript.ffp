@@ -1,4 +1,4 @@
-﻿#VisualFreeBasic_Project#  Version=5.5.7
+﻿#VisualFreeBasic_Project#  Version=5.6.1
 NumObjects=3
 ProjectName=Dust
 CompilationMode=0
@@ -39,8 +39,8 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|True|0|259|7637
-TopTab=#FF_AppStart#|False|0|16|1257
+TopTab=#FF_WinMain#|True|0|12|7792
+TopTab=#FF_AppStart#|False|0|209|1257
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
 
@@ -1122,12 +1122,127 @@ End sub
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [FF_WINMAIN_START]
 Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
 Dim Shared Now_line(2) As INTEGER
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
-print GetFirst("'","mov ',',1").str1
+dim assd as str2d=GetFirst("f,a")
+PrintA *assd.str1
+PrintA *assd.str2
 Dim t() AS TOKEN
 ReDim t(0 To 10)
 Dim ib as Stack=10
@@ -1368,37 +1483,38 @@ Function Evaluate(obj As string)As any ptr
 'Empty
 Return NULL
 End function
-Function GetFirst(byval sp as string ,str_ as string)as str2d
-   Dim i as integer
-
-   while i = len(str_)
-      i += 1
-   wend
-   if i mod  2 <> 0 then
-      Return TYPE<Str2D>(NULL,NULL)
-   End if
-   dim as BOOLEAN a ,b
-   Dim ret(1 To 2) as token
-   while i = len(str_)
-      if str_[i] <> sp[0] then '
-         i += 1
-      else
-         if a <> True And ret(a) <> Type < token > then
-            a            = true
-            ret(a).begin = i
-         Else
-            ret(a). _end = i
-         End if
-         if a = True And ret(a) <> Type < token > then
-            b            = true
-            ret(2).begin = i
-         Else
-            ret(2). _end = i
-         End if
-      End if
-   wend 
-   Return Type < str2d > ( New string(Mid(str_ ,ret(1).begin ,ret(1). _end)),New string(Mid(str_ ,ret(2).begin ,ret(2). _end)))
+Function GetFirst(str_ as string)as str2d
+'mov 'f','f' **ERR
+'mov 'f',q **ERR
+'mov 'a',a  **ACCEPT
+'mov f,a **ACCEPT
+Dim i as Integer =0
+dim d as Stack =4
+while i <> len(str_)
+   If str_[i]=39 then
+   d.Push Type<VarData>(NULL,0.0,i)
+   End IF
+i+=1
+wend      
+' !place(0)||!place(1) ? NULL : New Str
+#define M(L) *D.place(L).VINT
+#define Argv1 iif(D.place(0)=NULL Or D.place(1)=NULL,NULL,NEW  string(Mid(str_,M(0)+1,M(1)-M(0)+1))) 
+#define Argv2 iif(D.place(1)=NULL Or D.place(2)=NULL,NULL,NEW  string(Mid(str_,M(1)+1,M(2)-M(1)+1))) 
+#define Argv3 iif(D.place(2)=NULL Or D.place(3)=NULL,NULL,NEW  string(Mid(str_,M(2)+1,M(3)-M(2)+1)))
+#if DBG
+#define C(Q) sTR(*D.place(Q).VINT)+" "
+PrintA *Argv1+"|"+*Argv2+"|"+*Argv3
+#endif
+'Dim Argv1 as String Ptr=iif(D.place(0)=NULL Or D.place(1)=NULL,NULL,NEW  string(Mid(str_,*(D.place(0)).VINT,Len(str_)-*(D.place(1)).VINT+1))) 
+'Dim Argv2 as String Ptr=iif(D.place(2)=NULL Or D.place(3)=NULL,NULL,NEW  string(Mid(str_,*(D.place(2)).VINT,Len(str_)-*(D.place(3)).VINT+1))) 
+Dim b As Str2D=IIF(D.place(0)=NULL,Type<STR2D>(New string(LEFT(STR_,InStr(STR_,",")-1)),New string(RIGHT(STR_,LEN(STR_)-InStr(STR_,",")))),Type<STR2D>(Argv1,iif(Argv3=NULL,new string(right(STR_,len(str_)-M(1)-2)),Argv3)))
+d.Pop
+Return b
 End function
+
+
+
+
 
 
 [FF_WINMAIN_END]
