@@ -1,4 +1,4 @@
-# Development has been suspended ;(
+# This project is being slowly developed;(
 ### Language [README.md](README.md) | [README_zh-cn.md](README_zh-cn.md)
 ### Update logs [更新记录.txt](更新记录.txt)
 ## Brief introduction

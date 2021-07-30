@@ -1,4 +1,4 @@
-# 已暂停开发 ;(
+# 此工程正缓慢开发 ;(
 ### Language [README.md](README.md) | [README_zh-cn.md](README_zh-cn.md)
 ### 更新记录 [更新记录.txt](更新记录.txt)
 ## 简要说明
@@ -11,7 +11,6 @@
 ## 如何构建
 Window x64环境下使用[VFB ide](http://www.yfvb.com/soft-48.htm)直接编译即可
 ## 示例代码
-## Example codes
 ```
 var a
 main:
@@ -33,7 +32,7 @@ nop
 hlt 1
 end.
 ```
-C language version:
+C语言版本:
 ```
 #include"DitWinBasicConIO.h"
 #include"DitWinAPICaLL.h"

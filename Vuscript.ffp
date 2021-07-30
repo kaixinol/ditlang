@@ -39,10 +39,13 @@ ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|True|0|12|7792
-TopTab=#FF_AppStart#|False|0|209|1257
+TopTab=#FF_WinMain#|True|0|118|4428
+TopTab=#FF_AppStart#|False|0|33|1642
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
+
+
 
 
 
@@ -334,9 +337,9 @@ str1 As String Ptr
 str2 As String ptr
 End Type
 Type VarData
-VString As String ptr
+Vstring As String ptr
 VDou As double
-VInt As Integer
+VInt As integer
 Declare Function GetType ()As short
 #If DBG
 Declare Function GetData()As string
@@ -353,7 +356,7 @@ Declare Sub ClearData( )
 VName As String
 VString As String ptr
 VDou As Double
-VInt As Integer
+VInt As Any ptr
 End type
 Type Token
 begin As Long=0
@@ -560,6 +563,7 @@ Sub Stack.Pop()
    next
    
 End sub
+
 
 
 
@@ -1235,12 +1239,28 @@ End sub
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [FF_WINMAIN_START]
 Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
 Dim Shared Now_line(2) As INTEGER
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
-dim assd as str2d=GetFirst("f,a")
+dim assd as str2d=GetFirst("'bbbb',ammm")
 PrintA *assd.str1
 PrintA *assd.str2
 Dim t() AS TOKEN
@@ -1359,7 +1379,7 @@ HelpMessage :
       PC 3 ,"Use ""-varspace=<size>"" To set the varible zone size."
       exit_(1)
    End If
-   
+
    #if DBG
    DPrint(vbtab + "FF_WINMAIN()->varspace=" + Str(varspace))
    #endif
@@ -1368,7 +1388,7 @@ HelpMessage :
       printf "can't find file:" + ScriptPath + ",and this program will stop.(EMPTY?)"
       Exit_(2)
    End if
-   LoadScript(varspace)
+   'LoadScript(varspace)
    if WindowStay = True Then
       getchar
    End If
@@ -1393,20 +1413,6 @@ Sub LoadScript(size As const integer) '***Loading scripts
    DPrint(vbtab + "LoadScript()->file=" + ScriptPath)
    #endif
 
-   Dim VariableSpace() as Variable
-   ReDim VariableSpace( -1 To size)
-   VariableSpace( -1).VInt = size
-   Dim TMPInt as short
-   For TMPInt = 0 to TheLine
-      '''TODO :Add Function by scanning text.
-      If len(Line_Data(TMPInt)) <> 1 and InStr(Line_Data(TMPInt) ,":") = InStrrev(Line_Data(TMPInt) ,":") then
-         Dim FindInt as short
-         For FindInt = 0 to TheLine
-         next
-      End if
-   next
-   
-   Dim RTL as short
 End Sub
 Sub GetLine_And_LoadLine() '***Reads the string for each line and records the total number of lines
    #if DBG
@@ -1483,9 +1489,9 @@ Function Evaluate(obj As string)As any ptr
 'Empty
 Return NULL
 End function
-Function GetFirst(str_ as string)as str2d
+Function GetFirst(str_ as string)as str2d '{1.str_ 1}
 'mov 'f','f' **ERR
-'mov 'f',q **ERR
+'mov f,'q' **ERR
 'mov 'a',a  **ACCEPT
 'mov f,a **ACCEPT
 Dim i as Integer =0
@@ -1511,6 +1517,7 @@ Dim b As Str2D=IIF(D.place(0)=NULL,Type<STR2D>(New string(LEFT(STR_,InStr(STR_,"
 d.Pop
 Return b
 End function
+
 
 
 
