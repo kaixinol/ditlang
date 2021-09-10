@@ -1,4 +1,4 @@
-﻿#VisualFreeBasic_Project#  Version=5.6.1
+﻿#VisualFreeBasic_Project#  Version=5.6.5
 NumObjects=3
 ProjectName=Dust
 CompilationMode=0
@@ -16,33 +16,84 @@ UseWinXPthemes=0
 StrUnicode=0
 UseAdminPriv=0
 DeleteGeneratedCode=0
-AddCompOps= -gen gcc -O 3 
+AddCompOps= -gen gcc -O 0
 LastRunFilename=Dust32.exe
 ImageManager=30001.ico
 ImageManager=
 Major=1
 Minor=5
 Revision=5
-Build=897
+Build=1015
 FileMajor=1
 FileMinor=5
 FileRevision=5
-FileBuild=931
-AutoIncrement=0
+FileBuild=1016
+AutoIncrement=3
 DefaultCompiler=32
 Comments=
 CompanyName=
-FileDescription=
+FileDescription=Dit Preview A 
 LegalCopyrights=
 LegalTrademarks=
 ProductName=
 
 [Objects]
 
-TopTab=#FF_WinMain#|True|0|40|1379
-TopTab=#FF_AppStart#|False|0|172|5161
+TopTab=#FF_WinMain#|True|0|33|696
+TopTab=#FF_AppStart#|False|0|230|7186
 TopTab=#FF_PumpHook#|False|0|0|0
 #END_MAIN_PROPERTIES#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -386,7 +437,7 @@ TopTab=#FF_PumpHook#|False|0|0|0
 #define DPrint(A) PC(4,"[DEBUG]"+(A))
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
-#define AsStack vString=-1
+#define AsStack vString=Cast(String ptr,-1)
 Type Str2D
 str1 As String Ptr
 str2 As String ptr
@@ -396,9 +447,7 @@ Vstring As String ptr
 VDou As double
 VInt As integer
 Declare Function GetType ()As short
-#If DBG
 Declare Function GetData()As string
-#endif
 End type
 Type Variable
 #If DBG
@@ -421,7 +470,12 @@ Type Stack
 Declare Sub Push (argv As VarData) 
 Declare Sub Pop () 
 Declare Sub Init (ByVal num As short)
-used(1) As ushort
+used(1) As ushort 
+/'
+used(1):Number of allocated memory space.
+used(0):Number of used memory space.
+To release the memory, only need to release 'used(0)' 
+'/
 place(any) As VarData ptr
 End TYpe
 Type Func
@@ -429,12 +483,15 @@ Argvs As Stack
 LineBegin As short
 LineEnd As Short
 FuncName As String
-VarObject(any) As Variable ptr
+Declare function GetArgv(num As uinteger) As VarData
 End Type
 Type FileA
 Funcz(any) As Func
 SharedVar(any) As Variable ptr
 End type
+function Func.GetArgv(num As uinteger) As VarData
+return *this.Argvs.place(num)  
+end function
 Declare Operator = ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
 Operator = ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
   Dim aq as short=0
@@ -456,7 +513,7 @@ End Operator
 Declare Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
 Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
 If a.begin=b.begin and a._end=b._end Then
- Return true
+Return true
 Else 
 Return False
 End if
@@ -504,7 +561,7 @@ Else
 Return vEmp
 End if
 End Function
-
+ 
 Function VarData.GetType ( )As SHORT
 If this.VString<>(-1) And this.VString<>NULL Then
 Return vStr
@@ -601,9 +658,6 @@ SUB Variable.SetData(vardata_ As VarData) '***Set variable value
 End SUB
 
 Declare Function DUSTAPICALL Lib "WinAPICall" Alias "APICALL"(ZLNAME As String PTR ,D(any) As VARDATA PTR) As BOOLEAN
-Extern "C"
-Declare Sub GetStrToken Lib "GetToken" Alias "match"(zf As zstring ptr ,data1 as Token Ptr)
-End Extern
 Declare SUB ver Lib "WinAPICall" Alias "DLLVER"()
 sub Stack.Init(byval num As short)
    ReDim This.place(1 To num)
@@ -637,6 +691,11 @@ Sub Stack.Pop()
    next
    
 End sub
+
+
+
+
+
 
 
 
@@ -1373,13 +1432,92 @@ End sub
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [FF_WINMAIN_START]
 Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
 Dim Shared Now_line(2) As INTEGER
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of the program
 #if DBG
-
+/'
+#define TheLine Now_line(1)
+#define Now_Line_ Now_line(0)
+call <fx>,a
+a->stack
+fx<a>:
+get a.x
+get a.b
+pop
+end.
+'/
 
 '''Test1:测试GetFirst()
 DPrint("FF_WINMAIN->Test1.Begin")
@@ -1391,24 +1529,21 @@ DPrint("FF_WINMAIN->Test1.End")
 
 '''Test2:测试GetStrToken()
 DPrint("FF_WINMAIN->Test2.Begin")
-Dim t(6) AS TOKEN
-GetStrToken("(call(msgbox(Call(CStr(1))),16))",@T(0))
-printf STR(T(0).begin)+" "+STR(T(0)._end) CR
-printf STR(T(1).begin)+" "+STR(T(1)._end) CR
+'Dim t(6) AS TOKEN
+'match("(call(msgbox(Call(CStr(1))),16))",@T(0))
+'printf STR(T(0).begin)+" "+STR(T(0)._end) CR
+'printf STR(T(1).begin)+" "+STR(T(1)._end) CR
 DPrint("FF_WINMAIN->Test2.End")
 
 
 '''Test3:测试变量系统
-   /'
-    The -1st .VInt member of the Variable variable type is used to record the size of the array
-    The 0th variable of Variable type is not used, for comparison 
-   '/
 DPrint("FF_WINMAIN->Test3.Begin")
    Dim  As Variable a(-1 to 12)
    a(-1).VInt=12
    CreateVar(a(),"varname3")
    a(1).SetData(Parse("'hello?'"))
    a(1).PrintData
+   a(1).ClearData
 DPrint("FF_WINMAIN->Test3.End")
 
 
@@ -1428,7 +1563,19 @@ DPrint("FF_WINMAIN->Test4.Parse.End")
 DPrint("FF_WINMAIN->Test4.Pop /OK/")
 DPrint("FF_WINMAIN->Test4.End")
 '''
-
+'''Test5:测试是否能添加函数
+DPrint("FF_WINMAIN->Test5.Begin")
+redim Line_Data(1 To 10)
+line_data(1)="main:"
+line_data(2)="end."
+line_data(3)="customfx:"
+line_data(4)="hlt"
+line_data(5)="int 2"
+line_data(6)="end."
+TheLine=6
+LoadScript(1024)
+REDIM Line_Data(0)
+DPrint("FF_WINMAIN->Test5.End")
 End
 #endif
    Dim As BOOLEAN HelpMe ,WindowStay
@@ -1502,10 +1649,10 @@ End
    GetLine_And_LoadLine
    if HelpMe = True Then
 HelpMessage : 
-      PC 3 ,"Use ""--help"" To get help"
-      PC 3 ,"Use ""-stay"" to let this window couldt be close"
-      PC 3 ,"Use ""-load"" <scriptfile> to load vuscript file"
-      PC 3 ,"Use ""--v"" to get  vuscript version message."
+      PC 3 ,"Use ""--help"" To get help."
+      PC 3 ,"Use ""-stay"" let this window does not shut down after running."
+      PC 3 ,"Use ""-load"" <scriptfile> to load vuscript file."
+      PC 3 ,"Use ""--v"" to get  vuscript version messages."
       PC 3 ,"Use ""--copyright"" To get copyright messages."
       PC 3 ,"Use ""-varspace=<size>"" To set the varible zone size."
       exit_(1)
@@ -1541,13 +1688,48 @@ Sub PC(cl2 As const integer, D AS const STRING = vbcrlf)   '***Outputs text of t
 End Sub
 Sub LoadScript(size As const integer) '***Loading scripts
    #if DBG
-   DPrint(vbtab + "LoadScript()->file=" + ScriptPath)
+      DPrint(vbtab + "LoadScript()->file=" + ScriptPath)
    #endif
-
+#DEFINE DSTP(A) Print("[DEBUG]STOP HERE"+Str(A)+" "+Str(FF))  
+   
+    /'
+   Add defined functions by scanning each row in turn.
+   '/
+   ''Begin
+   Dim As uinteger FF,FF2 ,tmp_begin ,round
+   
+   Dim fxbox(any) as Func
+   For FF = 1 to TheLine
+      if Line_Data(FF) = "end." Then
+         round += 1
+      end if
+   Next
+   ReDim fxbox(1 to round)
+   round = 0
+   For FF = 1 to TheLine
+      If right(Line_Data(FF) ,1) = ":" then
+         ROUND                 += 1
+         fxbox(ROUND).FuncName = Left(Line_Data(FF) ,Len(Line_Data(FF)) -1)
+         fxbox(ROUND).LineBegin = FF
+         For FF2=FF to TheLine
+            If Line_Data(FF2) = "end." THEN
+               fxbox(ROUND).LineEnd   = FF2
+               Exit for
+            End if
+         Next
+         FF=FF2
+      End if
+   next
+   #If DBG
+      DPrint("LoadScript()->FX1=" + fxbox(1).FuncName + ":" + Str(fxbox(1).LineBegin) + ":" + Str(fxbox(1).LineEnd))
+      DPrint("LoadScript()->FX2=" + fxbox(2).FuncName + ":" + Str(fxbox(2).LineBegin) + ":" + Str(fxbox(2).LineEnd))
+   #ENDIF
+   
+   ''End
 End Sub
 Sub GetLine_And_LoadLine() '***Reads the string for each line and records the total number of lines
    #if DBG
-   DPrint(vbtab + "LoadScript()->file="+ScriptPath)
+   DPrint(vbtab + "GetLine_And_LoadLine()->file="+ScriptPath)
    #endif
    Dim f As const Integer = FreeFile
    Open ScriptPath For Binary As #f
@@ -1652,6 +1834,12 @@ Dim b As Str2D=IIF(D.place(1)=NULL,Type<STR2D>(New string(LEFT(STR_,InStr(STR_,"
 d.Pop
 Return b
 End function
+
+
+
+
+
+
 
 
 
