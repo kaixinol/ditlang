@@ -60,7 +60,7 @@ line: __asm("lea");
 }
 ```
 ## 待办事项
-- 添加函数检查
+- ~~添加函数检查~~
 - 简单的Dit代码执行
 ## 依赖项目
 - [GetToken](https://github.com/3XDot/GetToken)

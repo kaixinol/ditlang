@@ -61,7 +61,7 @@ line: __asm("lea");
 }
 ```
 ## Todos
-- Add function check
+- ~~Add function check~~
 - Simple Dit code execution
 ## Dependent project
 - [GetToken](https://github.com/3XDot/GetToken)
