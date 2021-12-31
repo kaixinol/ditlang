@@ -1,5 +1,5 @@
 ﻿#VisualFreeBasic_Project#  Version=5.6.8
-NumObjects=3
+NumObjects=8
 ProjectName=Dust
 CompilationMode=0
 CompilationDebug=0
@@ -38,11 +38,30 @@ LegalTrademarks=
 ProductName=
 
 [Objects]
+Module=.\modules\Array.Inc|11|673||Yes|
+Module=.\modules\VarData.Inc|0|0||Yes|
+Module=.\modules\Defination.Inc|39|2298||Yes|
+Module=.\modules\Variable.Inc|50|1599||Yes|
+Module=.\modules\Func.Inc|0|96||Yes|
 
-TopTab=#FF_WinMain#|True|0|323|11507
-TopTab=#FF_AppStart#|False|0|18|1268
+TopTab=#FF_WinMain#|False|0|36|1126
+TopTab=#FF_AppStart#|False|0|15|1194
 TopTab=#FF_PumpHook#|False|0|0|82
+TopTab=.\modules\Array.Inc|False|0|8|673
+TopTab=.\modules\VarData.Inc|False|0|0|0
+TopTab=.\modules\Defination.Inc|False|0|39|2298
+TopTab=.\modules\Variable.Inc|False|0|50|1599
+TopTab=.\modules\Func.Inc|False|0|0|96
 #END_MAIN_PROPERTIES#
+
+
+
+
+
+
+
+
+
 
 
 
@@ -448,268 +467,8 @@ TopTab=#FF_PumpHook#|False|0|0|82
 #define DPrint(A) PC(4,"[DEBUG]"+(A))
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
-#define AsStack vString=Cast(String ptr,-1)
-Type Bool2D
- IsLeft As BOOLEAN
- IsUsed As BOOLEAN=False
- RealDb As short
-End Type
-Type Str2D
-str1 As String Ptr
-str2 As String ptr
-End Type
-Type VarData
-Vstring As String ptr
-VDou As double
-VInt As integer
-Declare Function GetType ()As short
-Declare Function GetData()As string
-End type
-Type Variable
-#If DBG
-Declare Sub PrintData ()
-#endif
-Declare Sub  SetData (vardata_ As VarData) 
-Declare Function GetData ()As string
-Declare Function GetType ()As short
-Declare Sub ClearData( )
-VName As String
-VString As String ptr
-VDou As Double
-VInt As INTEGER
-End type
-Type Token
-begin As Long=0
-_end As long=0
-End type
-Type Stack
-Declare Sub Push (argv As VarData) 
-Declare Sub Pop () 
-Declare Sub Init (ByVal num As short)
-used(1) As ushort 
-/'
-used(1):Number of allocated memory space.
-used(0):Number of used memory space.
-To release the memory, only need to release 'used(0)' 
-'/
-place(any) As VarData ptr
-End TYpe
-Type Func
-Argvs As Stack
-LineBegin As short
-LineEnd As Short
-FuncName As String
-Declare function GetArgv(num As uinteger) As VarData
-End Type
-Type FileA
-Funcz(any) As Func
-SharedVar(any) As Variable ptr
-End type
-function Func.GetArgv(num As uinteger) As VarData
-return *this.Argvs.place(num)  
-end function
-Declare Operator = ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
-Operator = ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
-  Dim aq as short=0
-  If a.vname=b.vname Then aq+=1
-  If a.vstring=b.vstring Then aq+=1
-  If a.vint = b.vint Then aq+=1
-  If a.vdou =b.vdou Then aq+=1
-  If a.gettype =b.gettype Then aq+=1
-Return aq=5
-End Operator
-Declare Operator <> ( ByRef a As token, ByRef b As token ) As BOOLEAN
-Operator <> ( ByRef a As token, ByRef b As token ) As BOOLEAN
-If a.begin<>b.begin Or a._end<>b._end Then
- Return true
-Else 
-Return False
-End if
-End Operator
-Declare Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
-Operator = ( ByRef a As token, ByRef b As token ) As BOOLEAN
-If a.begin=b.begin and a._end=b._end Then
-Return true
-Else 
-Return False
-End if
-End Operator
-Declare Operator <> ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
-Operator <> ( ByRef a As Variable, ByRef b As Variable ) As BOOLEAN
-  If a.vname<>b.vname Then Return true
-  If a.vstring<>b.vstring Then Return true
-  If a.vint <> b.vint Then Return true
-  If a.vdou <>b.vdou Then Return true
-  If a.gettype <>b.gettype Then Return true
-Return false
-End Operator
-Declare Operator = ( ByRef a As VarData, ByRef b As VarData ) As BOOLEAN
-Operator = ( ByRef a As VarData, ByRef b As VarData ) As BOOLEAN
-  Dim aq as short=0
-  If a.vstring=b.vstring Then aq+=1
-  If a.vint = b.vint Then aq+=1
-  If a.vdou =b.vdou Then aq+=1
-Return aq=3
-End Operator
-Declare Operator <> ( ByRef a As VarData, ByRef b As VarData ) As BOOLEAN
-Operator <> ( ByRef a As VarData, ByRef b As VarData ) As BOOLEAN
-  If a.vstring<>b.vstring Then Return true
-  If a.vint <> b.vint Then Return true
-  If a.vdou <>b.vdou Then Return true
-Return false
-End Operator
-sub Variable.ClearData ( )
-   THIS.VNAME="[Unused]"
-   Delete This.vstring
-   This.vstring=NULL
-   This.vint=0
-   This.vdou=0
-End sub
+#define AsArray vString=Cast(String ptr,-1)
 
-Function Variable.GetType ( )As SHORT
-If this.VString<>NULL Then
-Return vStr
-ElseIf this.Vint<>0 Then
-Return vInte
-ElseIf this.Vdou<>0.0 Then
-Return vDoub
-Else
-Return vEmp
-End if
-End Function
- 
-Function VarData.GetType ( )As SHORT
-If this.VString<>(-1) And this.VString<>NULL Then
-Return vStr
-ElseIf this.VString=-1 THEN
-Return vStk
-ElseIf this.Vint<>0  Then
-Return vInte
-ElseIf this.Vdou<>0.0 Then
-Return vDoub
-else
-Return vEmp
-End if
-End Function
-#If DBG
-function VarData.GetData()As string
-
-   If This.gettype = vStr Then
-      If This.vstring=NULL Then RETURN "" 
-      return *(This.vstring) 'String
-   End if
-   If This.gettype = vDoub Then
-      return str(This.vdou)'Double
-
-   End if
-   If This.gettype = vInte Then
-      return str(This.vint)  'Integer
-   End if
-   If This.gettype = vStk Then
-Dim iI as integer
-Dim tmp as string
-'DEBUG CODE:Print "USED="+Str( (*Cast(Stack ptr,(THIS.vint))).used(0) ) CR
-  For  iI=1 To (*Cast(Stack ptr,(THIS.vint))).used(0)'Stack Datas
-tmp+=(*(*Cast(Stack ptr,(THIS.vint))).place(iI).getdata)+","
-  next
-Return "{"+left(tmp,len(tmp)-1)+"}"
-'去掉最后一个换行
-   End if
-    return "[Empty]" 'Empty
-End function
-#Endif
-#If DBG
-Sub Variable.PrintData()
-      If Len(This.vname) = 0 Then
-         This.vname="[Unused]"
-      End if
-   If This.gettype = vStr Then
-      If Len(This.vname) = 0 Then
-         printf "[Unused]::String->"+*(This.vstring)  + vbcrlf 'String
-      else
-         printf This.vname+ "::String->"+ *(This.vstring)  + vbcrlf 'String
-      End if
-      Exit sub
-   End if
-   If This.gettype = vStk Then
-     printf This.vname + "::<Stack>"+ vbcrlf 'Stack
-      Exit sub
-   End if
-   If This.gettype = vDoub Then
-      printf This.vname + "::Double->" + str(This.vdou) + vbcrlf 'Double
-      Exit sub
-   End if
-   If This.gettype = vInte Then
-      printf This.vname + "::Integer->" + str(This.vint) + vbcrlf 'Integer
-      Exit sub
-   End if
-   printf This.vname + "::Empty" + vbcrlf 'Empty
-If This.vname = "[Unused]" Then
-This.vname=""
-End if
-End Sub
-#endif
-function Variable.GetData()As string
-   If This.gettype = vStr Then
-      If This.vstring = NULL Then RETURN ""
-      return * (This.vstring) 'String
-   End if
-   If This.gettype = vDoub Then
-      return str(This.vdou) 'Double
-      
-   End if
-   If This.gettype = vInte Then
-      return str(This.vint) 'Integer
-   End if
-    If This.gettype = vStk Then
-     ' return  'Stack
-   End if       
-   return "[Empty]" 'Empty
-End function
-
-SUB Variable.SetData(vardata_ As VarData) '***Set variable value
-   this.VDou    = vardata_.VDou
-   this.VInt    = vardata_.VInt
-   this.VString = vardata_.VString
-End SUB
-'#inclib "GetToken"
-'Extern "C++"
-'Declare Sub match(sf As ZString Ptr,_data As Token ptr)
-'End Extern   
-Declare Function DUSTAPICALL Lib "WinAPICall" Alias "APICALL"(ZLNAME As String PTR ,D(any) As VARDATA PTR) As BOOLEAN
-Declare SUB ver Lib "WinAPICall" Alias "DLLVER"()
-sub Stack.Init(byval num As short)
-   ReDim This.place(1 To num)
-   This.used(1) = num '*** Set total value.
-End sub
-Sub Stack.Push(argv As VarData)
-   Dim tmp as Short
-   For tmp = 1 To used(1)
-      If This.place(tmp) = NULL then
-         This.place(tmp) = New VarData(argv)
-         This.used(0) += 1
-         Exit sub
-      End If
-   next
-   
-End sub
-Sub Stack.Pop()
-   Dim tmp as Short
-   
-   For tmp = 1 To used(0)
-      
-      If This.place(tmp) <> NULL then
-         
-         Delete( *This.place(tmp)).vstring
-         
-         Delete This.place(tmp)
-         
-         This.place(tmp) = null
-      End If
-      
-   next
-   
-End sub
 
 
 
@@ -1653,6 +1412,7 @@ End sub
 
 
 
+
 [FF_WINMAIN_START]
 Dim Shared ScriptPath As string
 Dim Shared Line_Data() As String
@@ -1663,7 +1423,7 @@ Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As INT8 '***The beginning of t
 #define TheLine Now_line(1)
 #define Now_Line_ Now_line(0)
 call <fx>,a
-a->stack
+a->Array
 fx<a>:
 get a.x
 get a.b
@@ -1699,19 +1459,19 @@ DPrint("FF_WINMAIN->Test3.Begin")
 DPrint("FF_WINMAIN->Test3.End")
 
 
-'''Test4:测试Stack类
+'''Test4:测试Array类
 DPrint("FF_WINMAIN->Test4.Begin")
    Dim f as VarData 
-  Dim jk as Stack
+  Dim jk as Array
 jk.Init 10
 jk.Push Parse("'Birds flying...'")
 jk.Push Parse("123")
 jk.Push Parse("456.1")
 f.VInt=Cast(integer,@jk)
-f.AsStack
-DPrint("FF_WINMAIN->Test4.Parse.Begin")printf("f::<Stack>="+f.GetData)  CR
+f.AsArray
+DPrint("FF_WINMAIN->Test4.Parse.Begin")printf("f::<Array>="+f.GetData)  CR
 DPrint("FF_WINMAIN->Test4.Parse.End")
-(*Cast(Stack ptr,f.VInt)).Pop
+(*Cast(Array ptr,f.VInt)).Pop
 DPrint("FF_WINMAIN->Test4.Pop /OK/")
 DPrint("FF_WINMAIN->Test4.End")
 '''
@@ -1961,7 +1721,7 @@ Function GetFirst(str_ as string) as str2d '** Parser
    'mov 'a',a  **ACCEPT
    'mov f,a **ACCEPT
    Dim i as Integer = 0
-   dim d as Stack
+   dim d as Array
    d.Init 4
    while i <> len(str_)
       If str_[i] = 39 then
@@ -1993,7 +1753,7 @@ sub GetStrToken(tk() As Token ,Strdata As string)
 'match("fffff()()(())",@ad(0))
    ''Call <message>,<Xor 1,0>
    ''Call <message>,'<啊啊>'
-   Dim qstack(1 to uBound(tk)*2) as Bool2D
+   Dim qArray(1 to uBound(tk)*2) as Bool2D
    Dim as integer i ,i2 = 1
    dim STP_FLAG as BOOLEAN = false
    For i = 0 to Len(Strdata)
@@ -2003,31 +1763,31 @@ sub GetStrToken(tk() As Token ,Strdata As string)
          Continue for
       End if
       if Strdata[i] = 60 And STP_FLAG <> true Then
-         qstack(i2).IsLeft = True
-         qstack(i2).IsUsed = True
-         DPrint(Str(qstack(i2).IsLeft) + "," + str(qstack(i2).IsUsed))
-         qstack(i2).RealDb=i+1
+         qArray(i2).IsLeft = True
+         qArray(i2).IsUsed = True
+         DPrint(Str(qArray(i2).IsLeft) + "," + str(qArray(i2).IsUsed))
+         qArray(i2).RealDb=i+1
          i2 += 1
       ElseIf Strdata[i] = 62 And STP_FLAG <> true Then
-         qstack(i2).IsLeft = false
-         qstack(i2).IsUsed = True
-         DPrint(Str(qstack(i2).IsLeft) + "," + str(qstack(i2).IsUsed))
-         qstack(i2).RealDb=i+1
+         qArray(i2).IsLeft = false
+         qArray(i2).IsUsed = True
+         DPrint(Str(qArray(i2).IsLeft) + "," + str(qArray(i2).IsUsed))
+         qArray(i2).RealDb=i+1
          i2 += 1
       End if
    next
-DPrint("qstack:"+Str(UBound(qstack)) )
-  ReDim Preserve qstack(1 to i2-1)
+DPrint("qArray:"+Str(UBound(qArray)) )
+  ReDim Preserve qArray(1 to i2-1)
 #If DBG
 Dim  d_i as integer
-FOR d_i=1 to UBound(qstack)
-DPrint(" Left:"+Str(qstack(d_i).IsLeft)+","+" Location:"+Str(qstack(d_i).RealDb))
+FOR d_i=1 to UBound(qArray)
+DPrint(" Left:"+Str(qArray(d_i).IsLeft)+","+" Location:"+Str(qArray(d_i).RealDb))
 Next
 #endif
 '''
 'Dim dst as string
 '#define BoolToTF(A) IIf(A=True,"T","F")
-'FOR i=1 to UBound(qstack)
+'FOR i=1 to UBound(qArray)
 
 'Next
 'DPrint(dst)

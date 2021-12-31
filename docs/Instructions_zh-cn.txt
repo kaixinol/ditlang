@@ -2,31 +2,22 @@ MOV 传送指令 [a=b 仅赋值]
 PUSH 入栈指令
 POP 出栈指令
 XCHG 交换指令 [a=b]
-ADD 加法指令 [a=a+b 仅处理数字]
+ADD 加法指令 [a+=b 仅处理数字]
 INC 加1指令 [a+=1 仅处理数字]
 DEC 减1指令 [a-=1 仅处理数字]
 CMP 比较指令 [a==b ]
 MUL 乘法指令 [c=a*b 仅处理数字]
 DIV 除法指令 [c=a/b 仅处理数字]
-AND 逻辑与指令 [ret a&&b ]
-OR  逻辑或指令 [ret a||b ]
-ANDB 位逻辑与指令 [ret a&b 仅处理数字]
-ORB  位逻辑或指令 [ret a|b 仅处理数字]
+AND 逻辑与指令 [ret a&b ]
+OR  逻辑或指令 [ret a|b ]
 XOR 逻辑异或指令 [ret a^b ]
 NOT 逻辑非指令 [ret !a ]
 CALL 子程序调用指令
 RET 子程序返回指令 [ret a]
 NOP 无操作指令
 HLT 停机指令
-FREE 释放变量指令 
-VAR 声明变体变量指令 
-$ 地址计数器的当前值 
 JMP 无条件转移指令 [jmp a]
 JZ 结果为零转移  [if a==0 then jmp b]
 JNZ 结果不为零转移 [if a then jmp b]
 JS  结果为负转移 [if a<0 then jmp b]
 JNS 结果为正转移 [if a>0 then jmp b]
-
-废弃指令:
-TEST 测试指令 
-LEA 装入有效地址
