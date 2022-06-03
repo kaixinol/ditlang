@@ -1,5 +1,5 @@
 #define UNICODE
-#include "Function.inc"
+#include "Function.bi"
 dim a as ScriptFunction
 with a
 REdim .ParametersType(1 to 2)

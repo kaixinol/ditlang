@@ -1,5 +1,5 @@
 #define DBG
-#include once "Array.inc"
+#include once "Array.bi"
 
 'Pass Type
 enum 
@@ -17,8 +17,7 @@ end enum
 'Location
 enum 
 INNER,
-SCRIPT,
-DLL
+SCRIPT
 end enum
 
 type ScriptFunction

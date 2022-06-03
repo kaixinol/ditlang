@@ -1,6 +1,6 @@
 #define UNICODE                 
 #lang "FB"                      
-#include "Array.inc"
+#include "Array.bi"
     Dim b as FBArray
 	b.init
 	dim ss as string ptr=New String("1")

@@ -1,6 +1,6 @@
 #DEFINE __ARRAY_USED__
 #ifndef __VARDATA__
-#include once "VarData.inc"
+#include once "VarData.bi"
 #endif
 Type FBArray
 ' **Public**

@@ -1,5 +1,4 @@
 #define MG_NUM 2126
-#define NULL 0
 #define OTHER MG_NUM,MG_NUM
 Type VarData
 Vstring As String ptr

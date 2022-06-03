@@ -1,0 +1,13 @@
+## 注意：读取文件的格式必须为ANSI格式
+Func_C:
+hlt
+end.
+
+Func_B():
+# ...
+end.
+# Hello
+#I’m zanksi 曹尼玛
+main([String],Int):
+# ...
+end.
